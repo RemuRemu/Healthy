@@ -29,26 +29,25 @@ public class RegisterFragment extends Fragment{
         _regBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                EditText _userId = (EditText) getView().findViewById(R.id.reg_userId);
-                EditText _name = (EditText) getView().findViewById(R.id.reg_name);
+                EditText _userEmail = (EditText) getView().findViewById(R.id.reg_userEmail);
                 EditText _password = (EditText) getView().findViewById(R.id.reg_password);
-                EditText _age = (EditText) getView().findViewById(R.id.reg_age);
-                String _userIdStr = _userId.getText().toString();
-                String _nameStr = _name.getText().toString();
+                EditText _repassword = (EditText) getView().findViewById(R.id.re_reg_password);
+
+                String _userEmailStr = _userEmail.getText().toString();
                 String _passwordStr = _password.getText().toString();
-                String _ageStr = _age.getText().toString();
-                if (_userIdStr.isEmpty() || _nameStr.isEmpty() || _passwordStr.isEmpty() || _ageStr.isEmpty()){
+                String _repasswordStr = _repassword.getText().toString();
+                if (_userEmailStr.isEmpty() || _repasswordStr.isEmpty() || _passwordStr.isEmpty()){
                     Toast.makeText(
                             getActivity(),
                             "กรุณาระบุข้อมูลให้ครบถ้วน",
                             Toast.LENGTH_SHORT
                     ).show();
                     Log.d("USER", "FIELD NAME IS EMPTY");
-                }else if (_userIdStr.equals("admin")){
-                    Log.d("USER", "USER ALREADY EXIST");
+                }else if (!_passwordStr.equals(_repasswordStr) || _password.length()<= 6){
+                    Log.d("USER", "INCORECT PASSWORD OR LENGTH NOT ENOUGH");
                     Toast.makeText(
                             getActivity(),
-                            "user นี้มีอยู่ในระบบแล้ว",
+                            "พาสเวิรืดไม่ถูกต้อง หรือ ความยามขั้นต่ำ 6 ตัว",
                             Toast.LENGTH_SHORT
                     ).show();
 
