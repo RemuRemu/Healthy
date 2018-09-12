@@ -7,12 +7,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.lab203_28.healthy.BMIFragment;
 import com.example.lab203_28.healthy.R;
+import com.example.lab203_28.healthy.Weight.Weight_FromFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WeightFragment extends Fragment{
 
