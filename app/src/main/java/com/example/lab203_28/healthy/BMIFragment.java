@@ -62,9 +62,9 @@ public class BMIFragment extends Fragment {
                     Log.d("USER", "FIELD NAME IS EMPTY");
                 }
                 else {
-                    int _heightInt = Integer.parseInt(_heightStr);
-                    int _weightInt = Integer.parseInt(_weightStr);
-                    int _ans = _weightInt/(_heightInt*_heightInt);
+                    float _heightFloat = Float.parseFloat(_heightStr);
+                    float _weightFloat = Float.parseFloat(_weightStr);
+                    float _ans = (_weightFloat/(_heightFloat*_heightFloat))*10000;
 
                     Log.d("USER", "BMI IS VALUE");
                     TextView tlk  = (TextView) getView().findViewById(R.id.bmi_ans);

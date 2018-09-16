@@ -15,11 +15,20 @@ import android.widget.TextView;
 import com.example.lab203_28.healthy.BMIFragment;
 import com.example.lab203_28.healthy.R;
 import com.example.lab203_28.healthy.Weight.Weight_FromFragment;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeightFragment extends Fragment{
+public class
+WeightFragment extends Fragment{
 
     ArrayList<Weight> weights = new ArrayList<>();
 
@@ -31,10 +40,31 @@ public class WeightFragment extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initAdd_WeightBtn();
+        FirebaseFirestore mDB = FirebaseFirestore.getInstance();
+        CollectionReference docRef = mDB.collection("myfitness").document("uid").collection("");
+        docRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-        weights.add(new Weight("1 june 18", 29, "up"));
-        weights.add(new Weight("2 june 18", 21, "up"));
-        weights.add(new Weight("3 june 18", 26, "up"));
+               //Weight _weight = queryDocumentSnapshots.toObjects(Weight.class);
+            }
+        });
+
+        //        mDB.collection("myfitness").document("uid").collection("weight").addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(
+//                    @javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots,
+//                    @javax.annotation.Nullable FirebaseFirestoreException e) {
+//                for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
+//                    if (doc.get("uid") != null){
+//                        weights.add(new Weight("1 june 18", 29, "up"));
+//                    }
+//                }
+//            }
+//        });
+        //weights.add(new Weight("1 june 18", 29, "up"));
+        //weights.add(new Weight("2 june 18", 21, "up"));
+       // weights.add(new Weight("3 june 18", 26, "up"));
 
         ListView _weightList = (ListView) getView().findViewById(R.id.weight_listview);
         final WeightAdaptor _weightAdapter = new WeightAdaptor(

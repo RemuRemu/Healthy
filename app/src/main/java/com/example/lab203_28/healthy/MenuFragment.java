@@ -26,7 +26,7 @@ public class MenuFragment extends Fragment{
         _menu.add("BMI");
         _menu.add("Weight");
         _menu.add("Setup");
-        _menu.add("Logout");
+        _menu.add("Sign out");
 
 
         final ArrayAdapter<String> _menuAdapter = new ArrayAdapter<>(
@@ -35,12 +35,13 @@ public class MenuFragment extends Fragment{
          _menu
         );
         ListView _menuList = (ListView) getView().findViewById(R.id.menu_list);
+
         _menuList.setAdapter(_menuAdapter);
         _menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                 Log.d("text" , "Click on  " + _menu.get(i));
-
+                FirebaseAuth mauth = FirebaseAuth.getInstance();
                 _menuAdapter.notifyDataSetChanged();
                 if (_menu.get(i).equals("BMI")){
                     Log.d("USER", "GOTO BMI");
@@ -50,9 +51,9 @@ public class MenuFragment extends Fragment{
                     Log.d("USER", "GOTO Weight");
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new WeightFragment()).commit();
                 }
-                else if (_menu.get(i).equals("Logout")){
+                else if (_menu.get(i).equals("Sign out")){
                     Log.d("USER", "logout");
-                    FirebaseAuth mauth = FirebaseAuth.getInstance();
+
                     mauth.signOut();
                     Toast.makeText(
                             getActivity(),
