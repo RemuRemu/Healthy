@@ -3,6 +3,7 @@ package com.example.lab203_28.healthy;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginFragment extends Fragment {
@@ -41,19 +44,34 @@ public class LoginFragment extends Fragment {
                 EditText _password = (EditText) getView().findViewById(R.id.login_password);
                 String _userIdStr = _userId.getText().toString();
                 String _passwordStr = _password.getText().toString();
-                if (_userIdStr.isEmpty() || _passwordStr.isEmpty()){
+
+                FirebaseAuth mauth;
+                FirebaseAuth.AuthStateListener mAuthListener;
+
+                if (_userIdStr.isEmpty() || _passwordStr.isEmpty()) {
                     Toast.makeText(
                             getActivity(),
                             "กรุณาระบุ user or password",
                             Toast.LENGTH_SHORT
                     ).show();
                     Log.d("USER", "USER OR PASSWORD IS EMPTY");
-                }else if (_userIdStr.equals("admin") && _passwordStr.equals("admin")){
-                    Log.d("USER", "GOTO BMI");
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new MenuFragment()).commit();
                 }
                 else{
-                    Log.d("USER", "INVALTD USERNAME OR PASSWORD ");
+                    mauth = FirebaseAuth.getInstance();
+                    mAuthListener = new FirebaseAuth.AuthStateListener() {
+                        @Override
+                        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                            if (user != null){}
+                            else{}
+                        }
+                    };
+
+
+
+                    Log.d("USER", "GOTO BMI");
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new MenuFragment()).commit();;
                 }
             }
         });

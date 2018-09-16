@@ -75,7 +75,9 @@ public class RegisterFragment extends Fragment{
                     fbAuth.createUserWithEmailAndPassword(_userEmailStr,_passwordStr).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
+
                             authResult.getUser().sendEmailVerification();
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -83,7 +85,13 @@ public class RegisterFragment extends Fragment{
                             Toast.makeText(getActivity(),"ERROR ="+e.getMessage(),Toast.LENGTH_LONG);
                         }
                     });
-
+                    Toast.makeText(
+                            getActivity(),
+                            "ลงทะเเบียนสำเร็จ" +
+                                    "",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new LoginFragment()).commit();
 
                 }
             }
