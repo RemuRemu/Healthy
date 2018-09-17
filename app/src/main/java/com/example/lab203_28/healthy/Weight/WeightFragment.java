@@ -56,7 +56,7 @@ WeightFragment extends Fragment{
                 weights
         );
         weights.clear();
-        mDB.collection("myfitness").document("uid").collection("weight").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mDB.collection("myfitness").document(uId).collection("weight").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
