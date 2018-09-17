@@ -71,16 +71,21 @@ public class Weight_FromFragment extends Fragment {
                 mDB.collection("myfitness").document("uid").collection("weight").add(new Weight(_dateStr,_weightFloat,_status)).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-
+                        Log.d("USER", "RECORD_WEIGHT");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-//
+                        Log.d("USER", "RECORD_WEIGHT_FAIL");
+                        Toast.makeText(
+                                getActivity(),
+                                "เกิดข้อผืดพลาด :"+e,
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 });
 
-                Log.d("USER", "RECORD_WEIGHT");
+
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new WeightFragment()).commit();
                 Toast.makeText(
                         getActivity(),

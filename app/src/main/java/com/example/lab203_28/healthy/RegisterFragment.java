@@ -77,6 +77,13 @@ public class RegisterFragment extends Fragment{
                         public void onSuccess(AuthResult authResult) {
 
                             authResult.getUser().sendEmailVerification();
+                            Log.d("USER", "Register Complete");
+                            Toast.makeText(
+                                    getActivity(),
+                                    "ลงทะเเบียนสำเร็จ" +
+                                            "",
+                                    Toast.LENGTH_SHORT
+                            ).show();
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -85,12 +92,7 @@ public class RegisterFragment extends Fragment{
                             Toast.makeText(getActivity(),"ERROR ="+e.getMessage(),Toast.LENGTH_LONG);
                         }
                     });
-                    Toast.makeText(
-                            getActivity(),
-                            "ลงทะเเบียนสำเร็จ" +
-                                    "",
-                            Toast.LENGTH_SHORT
-                    ).show();
+
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new LoginFragment()).commit();
 
                 }

@@ -13,11 +13,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.lab203_28.healthy.BMIFragment;
+import com.example.lab203_28.healthy.MenuFragment;
 import com.example.lab203_28.healthy.R;
 import com.example.lab203_28.healthy.Weight.Weight_FromFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -40,17 +44,57 @@ WeightFragment extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initAdd_WeightBtn();
+        initBack_Btn();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        String uId = mUser.getUid();
         FirebaseFirestore mDB = FirebaseFirestore.getInstance();
-        CollectionReference docRef = mDB.collection("myfitness").document("uid").collection("");
-        docRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        final ListView weightList = (ListView) getView().findViewById(R.id.weight_listview);
+        final WeightAdaptor weightAdapter = new WeightAdaptor(
+                getActivity(),
+                R.layout.fragment_weight,
+                weights
+        );
+        weights.clear();
+        mDB.collection("myfitness").document("uid").collection("weight").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+            public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                    Log.d("WEIGHT", doc.getData().toString());
 
-               //Weight _weight = queryDocumentSnapshots.toObjects(Weight.class);
+                    weights.add(doc.toObject(Weight.class));
+                }
+
+                weightList.setAdapter(weightAdapter);
             }
         });
+//        mDB.collection("myfitness").document(uId).collection("weight").addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+//
+//                weights.clear();
+//                for(DocumentSnapshot doc : documentSnapshots){
+//                    if(doc.get("date") != null){
+//                        weights.add(doc.toObject(Weight.class));
+//                    }
+//                }
+//
+//                ListView weightList = (ListView) getView().findViewById(R.id.weight_listview);
+//                WeightAdaptor weightAdapter = new WeightAdaptor(getActivity(), R.layout.fragment_weight, weights);
+//                weightList.setAdapter(weightAdapter);
+//            }
+//        });
 
-        //        mDB.collection("myfitness").document("uid").collection("weight").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        //        CollectionReference docRef = mDB.collection("myfitness").document("uid").collection("");
+//        docRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//
+//               Weight _weight = (Weight) queryDocumentSnapshots.toObjects(Weight.class);
+//            }
+//        });
+//
+//                mDB.collection("myfitness").document("uid").collection("weight").addSnapshotListener(new EventListener<QuerySnapshot>() {
 //            @Override
 //            public void onEvent(
 //                    @javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots,
@@ -66,14 +110,6 @@ WeightFragment extends Fragment{
         //weights.add(new Weight("2 june 18", 21, "up"));
        // weights.add(new Weight("3 june 18", 26, "up"));
 
-        ListView _weightList = (ListView) getView().findViewById(R.id.weight_listview);
-        final WeightAdaptor _weightAdapter = new WeightAdaptor(
-                getActivity(),
-                R.layout.weight_,
-                weights
-        );
-
-        _weightList.setAdapter(_weightAdapter);
 
 
 
@@ -87,6 +123,16 @@ WeightFragment extends Fragment{
             public void onClick(View v) {
                 Log.d("USER", "GOTO ADD_WEIGHT");
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new Weight_FromFragment()).commit();
+            }
+        });
+    }
+    void initBack_Btn() {
+        TextView _back_Btn = (TextView) getView().findViewById(R.id.weight_back_btn);
+        _back_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("USER", "GOTO ADD_WEIGHT");
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new MenuFragment()).commit();
             }
         });
     }
