@@ -2,36 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ScrollView
-
+    <Button
+        android:id="@+id/sleep_back_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:padding="35dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:text="back"/>
 
-            <Button
-                android:id="@+id/sleep_add_sleepbnt"
-                android:layout_width="313dp"
-                android:layout_height="wrap_content"
-                android:text="@string/add_weight"
-                android:textAlignment="center" />
+    <Button
+        android:id="@+id/sleep_add_sleep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add sleep"/>
 
-            <ListView
-                android:id="@+id/sleep_listview"
-                android:layout_width="match_parent"
-                android:layout_height="440dp"></ListView>
+    <ListView
+        android:id="@+id/sleep_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"></ListView>
 
-            <Button
-                android:id="@+id/sleep_back_btn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/back" />
-
-
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>
